@@ -1,0 +1,50 @@
+server:
+  port: 8081
+spring:
+  mvc:
+    servlet:
+      load-on-startup: 1
+  application:
+    name: hmdp
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://49.235.84.94:3307/hmdp?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: rootroot
+  redis:
+    host: 49.235.84.94
+    port: 6379
+    password: 123456
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 1
+        time-between-eviction-runs: 10s
+  rabbitmq:
+    host: 49.235.84.94
+    username: root
+    password: 123456
+    virtual-host: /
+    port: 5672
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 10
+        prefetch: 1
+        auto-startup: true
+        default-requeue-rejected: true
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000ms
+        max-attempts: 3
+        max-interval: 10000ms
+        multiplier: 1
+  jackson:
+    default-property-inclusion: non_null # JSON处理时忽略非空字段
+mybatis-plus:
+  type-aliases-package: com.hmdp.entity # 别名扫描包
+logging:
+  level:
+    com.hmdp: debug
